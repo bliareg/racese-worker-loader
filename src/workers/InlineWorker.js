@@ -1,6 +1,7 @@
 // http://stackoverflow.com/questions/10343913/how-to-create-a-web-worker-from-a-string
 
-var URL = window.URL || window.webkitURL;
+var main = self
+var URL = main.URL || main.webkitURL;
 
 module.exports = function (content, url) {
   try {
@@ -9,10 +10,10 @@ module.exports = function (content, url) {
 
       try {
         // BlobBuilder = Deprecated, but widely implemented
-        var BlobBuilder = window.BlobBuilder ||
-        window.WebKitBlobBuilder ||
-        window.MozBlobBuilder ||
-        window.MSBlobBuilder;
+        var BlobBuilder = main.BlobBuilder ||
+        main.WebKitBlobBuilder ||
+        main.MozBlobBuilder ||
+        main.MSBlobBuilder;
 
         blob = new BlobBuilder();
 
@@ -24,9 +25,9 @@ module.exports = function (content, url) {
         blob = new Blob([content]);
       }
 
-      return new Worker(URL.createObjectURL(blob));
+      URL.createObjectURL(blob);
     } catch (e) {
-      return new Worker('data:application/javascript,' + encodeURIComponent(content));
+      'data:application/javascript,' + encodeURIComponent(content);
     }
   } catch (e) {
     if (!url) {
