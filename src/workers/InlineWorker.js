@@ -3,7 +3,8 @@
 /* eslint-env browser */
 /* eslint-disable no-var, vars-on-top, prefer-template */
 
-var URL = window.URL || window.webkitURL;
+var main =  self;
+var URL = main.URL || main.webkitURL;
 
 module.exports = function inlineWorker(content, url) {
   try {
@@ -13,10 +14,10 @@ module.exports = function inlineWorker(content, url) {
       try {
         // BlobBuilder = Deprecated, but widely implemented
         var BlobBuilder =
-          window.BlobBuilder ||
-          window.WebKitBlobBuilder ||
-          window.MozBlobBuilder ||
-          window.MSBlobBuilder;
+          main.BlobBuilder ||
+          main.WebKitBlobBuilder ||
+          main.MozBlobBuilder ||
+          main.MSBlobBuilder;
 
         blob = new BlobBuilder();
 
@@ -28,17 +29,13 @@ module.exports = function inlineWorker(content, url) {
         blob = new Blob([content]);
       }
 
-      return new Worker(URL.createObjectURL(blob));
+      return URL.createObjectURL(blob);
     } catch (e) {
-      return new Worker(
-        'data:application/javascript,' + encodeURIComponent(content)
-      );
+      return 'data:application/javascript,' + encodeURIComponent(content);
     }
   } catch (e) {
     if (!url) {
       throw Error('Inline worker is not supported');
     }
-
-    return new Worker(url);
   }
 };
