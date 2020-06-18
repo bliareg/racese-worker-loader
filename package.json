@@ -1,5 +1,5 @@
 {
-  "name": "race-seworker-loader",
+  "name": "racese-worker-loader",
   "version": "1.0.3",
   "author": "Tobias Koppers @sokra",
   "description": "worker loader module for webpack",
