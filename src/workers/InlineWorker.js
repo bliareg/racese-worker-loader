@@ -25,15 +25,13 @@ module.exports = function (content, url) {
         blob = new Blob([content]);
       }
 
-      URL.createObjectURL(blob);
+      return URL.createObjectURL(blob);
     } catch (e) {
-      'data:application/javascript,' + encodeURIComponent(content);
+      return 'data:application/javascript,' + encodeURIComponent(content);
     }
   } catch (e) {
     if (!url) {
       throw Error('Inline worker is not supported');
     }
-
-    return new Worker(url);
   }
 };
